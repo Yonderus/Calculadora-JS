@@ -1,0 +1,321 @@
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .xiquet-grid .btn {
+            font-size: 24px;
+            padding: 24px;
+        }
+
+        .xiquet-grid {
+            grid-template-columns: repeat(4, 1fr);
+        }   
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .calculator-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            max-width: 450px;
+            width: 100%;
+            backdrop-filter: blur(10px);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .mode-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 5px;
+            border-radius: 15px;
+        }
+
+        .mode-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background: transparent;
+            color: white;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .mode-btn.active {
+            background: rgba(255, 255, 255, 0.9);
+            color: #f5576c;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .mode-btn:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .display {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .display-history {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            height: 20px;
+            text-align: right;
+            margin-bottom: 5px;
+        }
+
+        .display-main {
+            color: white;
+            font-size: 32px;
+            font-weight: 700;
+            text-align: right;
+            word-wrap: break-word;
+            word-break: break-all;
+            min-height: 40px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+
+        /* ===== Estat de les operacions ===== */
+        .status {
+            height: 26px;
+            margin-top: 10px;
+            padding: 0 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 26px;
+            text-align: center;
+            color: white;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: background 0.3s ease;
+        }
+
+        .status:empty {
+            background: transparent;
+        }
+
+        .status.success {
+            background: rgba(22, 163, 74, 0.85);
+            animation: statusIn 0.3s ease-out;
+        }
+
+        .status.error {
+            background: rgba(220, 38, 38, 0.85);
+            animation: statusIn 0.3s ease-out;
+        }
+
+        @keyframes statusIn {
+            from {
+                opacity: 0;
+                transform: translateY(-4px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== Operació anterior ===== */
+        .display-previ {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 13px;
+            height: 18px;
+            text-align: right;
+            font-style: italic;
+        }
+
+        .buttons-grid {
+            display: grid;
+            gap: 10px;
+        }
+
+        .basic-grid {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .advanced-grid {
+            grid-template-columns: repeat(5, 1fr);
+        }
+
+        .programmer-grid {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .btn {
+            padding: 20px;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .btn-operator {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .btn-equals {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            grid-column: span 2;
+        }
+
+        .btn-clear {
+            background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+        }
+
+        .btn-function {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            font-size: 14px;
+        }
+
+        .btn-hex {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #333;
+            font-weight: 700;
+        }
+
+        .base-selector {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .base-btn {
+            padding: 8px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            color: #333;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .base-btn.active {
+            border-color: #f5576c;
+            box-shadow: 0 4px 15px rgba(245, 87, 108, 0.3);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            .calculator-container {
+                padding: 20px;
+            }
+            
+            .btn {
+                padding: 15px;
+                font-size: 16px;
+            }
+            
+            .display-main {
+                font-size: 28px;
+            }
+        }
+
+                /* ===== Mode Historial ===== */
+        .historial-capcalera {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 13px;
+            color: #764ba2;
+            font-weight: 600;
+        }
+
+        .historial-btn {
+            border: none;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .historial-llista {
+            list-style: none;
+            max-height: 380px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .historial-item {
+            background: #f4f2fb;
+            border-left: 4px solid #764ba2;
+            border-radius: 8px;
+            padding: 10px 12px;
+        }
+
+        .historial-operacio {
+            font-size: 16px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .historial-info {
+            font-size: 12px;
+            color: #888;
+            margin-top: 2px;
+        }
+
+        .historial-buit {
+            text-align: center;
+            color: #888;
+            padding: 20px;
+        }

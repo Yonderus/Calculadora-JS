@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Multimode</title>
+    <link rel="stylesheet" href="calculatora.css">
+</head>
+<body>
+    <div class="calculator-container">
+        <div class="mode-selector">
+            <button class="mode-btn" data-mode="historial">Historial</button>
+            <button class="mode-btn" data-mode="xiquet">Xiquet</button>
+            <button class="mode-btn active" data-mode="basic">Bàsic</button>
+            <button class="mode-btn" data-mode="advanced">Avançat</button>
+            <button class="mode-btn" data-mode="programmer">Programador</button>
+        </div>
+
+        <div class="display">
+            <div class="display-previ" id="previ"></div>
+            <div class="display-history" id="historial"></div>
+            <div class="display-main" id="display">0</div>
+            <div class="status" id="status"></div>
+        </div>
+
+        <!-- Selector de base per a mode programador -->
+        <div id="baseSelector" class="base-selector hidden">
+            <button class="base-btn active" data-base="10">DEC</button>
+            <button class="base-btn" data-base="16">HEX</button>
+            <button class="base-btn" data-base="8">OCT</button>
+            <button class="base-btn" data-base="2">BIN</button>
+        </div>
+
+        <!-- Mode Xiquet -->
+        <div id="xiquetMode" class="buttons-grid xiquet-grid hidden">
+            <button class="btn btn-clear" onclick="calc.netejar()">C</button>
+
+            <button class="btn btn-number" onclick="calc.afegirNombre('7')">7</button>
+            <button class="btn btn-number" onclick="calc.afegirNombre('8')">8</button>
+            <button class="btn btn-number" onclick="calc.afegirNombre('9')">9</button>
+
+            <button class="btn btn-number" onclick="calc.afegirNombre('4')">4</button>
+            <button class="btn btn-number" onclick="calc.afegirNombre('5')">5</button>
+            <button class="btn btn-number" onclick="calc.afegirNombre('6')">6</button>
+            <button class="btn btn-operator" onclick="calc.establirOperador('-')">−</button>
+            
+            <button class="btn btn-number" onclick="calc.afegirNombre('1')">1</button>
+            <button class="btn btn-number" onclick="calc.afegirNombre('2')">2</button>
+            <button class="btn btn-number" onclick="calc.afegirNombre('3')">3</button>
+            <button class="btn btn-operator" onclick="calc.establirOperador('+')">+</button>
+            
+            <button class="btn btn-number" onclick="calc.afegirNombre('0')">0</button>
+            <button class="btn btn-equals" onclick="calc.calcular()">=</button>
+
+        </div>
+
+        <!-- Mode Bàsic -->
+        <div id="basicMode" class="buttons-grid basic-grid">
+            <button class="btn btn-clear" onclick="calc.netejar()">C</button>
+            <button class="btn btn-operator" onclick="calc.canviarSigne()">+/-</button>
+            <button class="btn btn-operator" onclick="calc.percentatge()">%</button>
+            <button class="btn btn-operator" onclick="calc.establirOperador('/')">÷</button>
+            
+            <button class="btn btn-number" onclick="calc.afegirNombre('7')">7</button>
+            <button class="btn btn-number" onclick="calc.afegirNombre('8')">8</button>
+            <button class="btn btn-number" onclick="calc.afegirNombre('9')">9</button>
+            <button class="btn btn-operator" onclick="calc.establirOperador('*')">×</button>
+            
+            <button class="btn btn-number" onclick="calc.afegirNombre('4')">4</button>
+            <button class="btn btn-number" onclick="calc.afegirNombre('5')">5</button>
+            <button class="btn btn-number" onclick="calc.afegirNombre('6')">6</button>
+            <button class="btn btn-operator" onclick="calc.establirOperador('-')">−</button>
+            
+            <button class="btn btn-number" onclick="calc.afegirNombre('1')">1</button>
+            <button class="btn btn-number" onclick="calc.afegirNombre('2')">2</button>
+            <button class="btn btn-number" onclick="calc.afegirNombre('3')">3</button>
+            <button class="btn btn-operator" onclick="calc.establirOperador('+')">+</button>
+            
+            <button class="btn btn-number" onclick="calc.afegirNombre('0')">0</button>
+            <button class="btn btn-number" onclick="calc.decimal()">.</button>
+            <button class="btn btn-equals" onclick="calc.calcular()">=</button>
+        </div>
+
+        <!-- Mode Avançat -->
+        <div id="advancedMode" class="buttons-grid advanced-grid hidden">
+            <button class="btn btn-clear" onclick="calc.netejar()">C</button>
+            <button class="btn btn-function" onclick="calc.funcioCientifica('sin')">sin</button>
+            <button class="btn btn-function" onclick="calc.funcioCientifica('cos')">cos</button>
+            <button class="btn btn-function" onclick="calc.funcioCientifica('tan')">tan</button>
+            <button class="btn btn-operator" onclick="calc.establirOperador('/')">÷</button>
+            
+            <button class="btn btn-function" onclick="calc.funcioCientifica('ln')">ln</button>
+            <button class="btn btn-function" onclick="calc.funcioCientifica('log')">log</button>
+            <button class="btn btn-function" onclick="calc.funcioCientifica('sqrt')">√</button>
+            <button class="btn btn-function" onclick="calc.establirOperador('pow')">x^y</button>
+            <button class="btn btn-operator" onclick="calc.establirOperador('*')">×</button>
+            
+            <button class="btn btn-number" onclick="calc.afegirNombre('7')">7</button>
+            <button class="btn btn-number" onclick="calc.afegirNombre('8')">8</button>
+            <button class="btn btn-number" onclick="calc.afegirNombre('9')">9</button>
+            <button class="btn btn-function" onclick="calc.funcioCientifica('exp')">e^x</button>
+            <button class="btn btn-operator" onclick="calc.establirOperador('-')">−</button>
+            
+            <button class="btn btn-number" onclick="calc.afegirNombre('4')">4</button>
+            <button class="btn btn-number" onclick="calc.afegirNombre('5')">5</button>
+            <button class="btn btn-number" onclick="calc.afegirNombre('6')">6</button>
+            <button class="btn btn-function" onclick="calc.factorial()">n!</button>
+            <button class="btn btn-operator" onclick="calc.establirOperador('+')">+</button>
+            
+            <button class="btn btn-number" onclick="calc.afegirNombre('1')">1</button>
+            <button class="btn btn-number" onclick="calc.afegirNombre('2')">2</button>
+            <button class="btn btn-number" onclick="calc.afegirNombre('3')">3</button>
+            <button class="btn btn-function" onclick="calc.pi()">π</button>
+            <button class="btn btn-function" onclick="calc.e()">e</button>
+            
+            <button class="btn btn-number" onclick="calc.afegirNombre('0')">0</button>
+            <button class="btn btn-number" onclick="calc.decimal()">.</button>
+            <button class="btn btn-operator" onclick="calc.canviarSigne()">+/-</button>
+            <button class="btn btn-equals" onclick="calc.calcular()">=</button>
+        </div>
+
+        <!-- Mode Programador -->
+        <div id="programmerMode" class="buttons-grid programmer-grid hidden">
+            <button class="btn btn-hex" onclick="calc.afegirNombre('A')">A</button>
+            <button class="btn btn-hex" onclick="calc.afegirNombre('B')">B</button>
+            <button class="btn btn-hex" onclick="calc.afegirNombre('C')">C</button>
+            <button class="btn btn-hex" onclick="calc.afegirNombre('D')">D</button>
+
+            <button class="btn btn-hex" onclick="calc.afegirNombre('E')">E</button>
+            <button class="btn btn-hex" onclick="calc.afegirNombre('F')">F</button>
+            <button class="btn btn-function" onclick="calc.establirOperador('and')">AND</button>
+            <button class="btn btn-function" onclick="calc.establirOperador('or')">OR</button>
+
+            <button class="btn btn-function" onclick="calc.establirOperador('xor')">XOR</button>
+            <button class="btn btn-function" onclick="calc.operacioBitwiseUnaria('not')">NOT</button>
+            <button class="btn btn-function" onclick="calc.operacioBitwiseUnaria('lshift')">&lt;&lt;</button>
+            <button class="btn btn-function" onclick="calc.operacioBitwiseUnaria('rshift')">&gt;&gt;</button>
+
+            <button class="btn btn-number" onclick="calc.afegirNombre('7')">7</button>
+            <button class="btn btn-number" onclick="calc.afegirNombre('8')">8</button>
+            <button class="btn btn-number" onclick="calc.afegirNombre('9')">9</button>
+            <button class="btn btn-operator" onclick="calc.establirOperador('/')">÷</button>
+
+            <button class="btn btn-number" onclick="calc.afegirNombre('4')">4</button>
+            <button class="btn btn-number" onclick="calc.afegirNombre('5')">5</button>
+            <button class="btn btn-number" onclick="calc.afegirNombre('6')">6</button>
+            <button class="btn btn-operator" onclick="calc.establirOperador('*')">×</button>
+
+            <button class="btn btn-number" onclick="calc.afegirNombre('1')">1</button>
+            <button class="btn btn-number" onclick="calc.afegirNombre('2')">2</button>
+            <button class="btn btn-number" onclick="calc.afegirNombre('3')">3</button>
+            <button class="btn btn-operator" onclick="calc.establirOperador('-')">−</button>
+
+            <button class="btn btn-clear" onclick="calc.netejar()">C</button>
+            <button class="btn btn-number" onclick="calc.afegirNombre('0')">0</button>
+            <button class="btn btn-equals" style="grid-column: span 1;" onclick="calc.calcular()">=</button>
+            <button class="btn btn-operator" onclick="calc.establirOperador('+')">+</button>
+        </div>
+
+        <!-- Mode Historial -->
+        <div id="historialMode" class="historial hidden">
+            <div class="historial-capcalera">
+                <span id="historialOrigen"></span>
+                <button class="historial-btn" onclick="calc.carregarHistorial()">↻ Recarregar</button>
+            </div>
+            <ul id="llistaHistorial" class="historial-llista"></ul>
+        </div>
+    </div>
+
+    <script src="calculatora.js" defer></script>
+</body>
+</html>
