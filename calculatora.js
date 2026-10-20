@@ -63,6 +63,59 @@ class Calculadora {
         localStorage.setItem('operacions', JSON.stringify(operacions));
     }
 
+    async carregarHistorial() {
+    const origen = document.getElementById('historialOrigen');
+    let operacions;
+
+        try {
+            const resposta = await fetch(`${this.SERVER_URL}/api/operations`);
+            if (!resposta.ok) throw new Error('Resposta incorrecta del servidor');
+            const dades = await resposta.json();
+            operacions = dades.operations;
+            origen.textContent = 'Origen: servidor';
+        } catch (error) {
+            const text = localStorage.getItem('operacions');
+            operacions = text === null ? [] : JSON.parse(text).reverse();
+            origen.textContent = 'Origen: local (servidor no disponible)';
+        }
+
+        this.mostrarHistorial(operacions);
+    }
+
+    mostrarHistorial(operacions) {
+        const llista = document.getElementById('llistaHistorial');
+        llista.textContent = '';
+
+        if (operacions.length === 0) {
+            const buit = document.createElement('li');
+            buit.className = 'historial-buit';
+            buit.textContent = 'Encara no hi ha operacions';
+            llista.appendChild(buit);
+            return;
+        }
+
+        operacions.forEach(op => {
+            const li = document.createElement('li');
+            li.className = 'historial-item';
+
+            const simbol = SIMBOLS[op.operation] || op.operation;
+
+            const operacio = document.createElement('div');
+            operacio.className = 'historial-operacio';
+            operacio.textContent = op.operand2 === null || op.operand2 === undefined
+                ? `${simbol}(${op.operand1}) = ${op.result}`
+                : `${op.operand1} ${simbol} ${op.operand2} = ${op.result}`;
+
+            const info = document.createElement('div');
+            info.className = 'historial-info';
+            info.textContent = `${op.mode} · ${op.timestamp || op.data}`;
+
+            li.appendChild(operacio);
+            li.appendChild(info);
+            llista.appendChild(li);
+        });
+    }
+
     // Función para mostrar estados
     showStatus(message, type) {
         const statusDiv = document.getElementById('status');
@@ -113,6 +166,7 @@ class Calculadora {
         // Mostrar el mode seleccionat
         if (mode === 'historial') {
             document.getElementById('historialMode').classList.remove('hidden');
+            this.carregarHistorial();
         }else if (mode === 'xiquet') {
             document.getElementById('xiquetMode').classList.remove('hidden');
         } else if (mode === 'basic') {
@@ -439,6 +493,8 @@ class Calculadora {
     }
 
     gestionarTeclat(e) {
+        if (this.modeActual === 'historial') return;
+
         if (e.key >= '0' && e.key <= '9') {
             this.afegirNombre(e.key);
         } else if (e.key === '.') {
